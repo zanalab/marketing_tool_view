@@ -3,15 +3,17 @@ import { BarLoader } from "react-spinners";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import DashboardCard04 from "../partials/dashboard/DashboardCard04";
-import DashboardCard05 from "../partials/dashboard/DashboardCard05";
 import DashboardCard07 from "../partials/dashboard/DashboardCard07";
+import RealtimeChart from "../charts/RealtimeChart";
+import FollowerGrowthChart from "../charts/LineChart";
+import EngagementChart from "../charts/EngagementChart";
 
 function Dashboard() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const hashtags = data?.Hashtags;
-
+  const follower = data?.Follower;
   useEffect(() => {
     // Fetch data when the component is mounted
     fetch(
@@ -46,10 +48,19 @@ function Dashboard() {
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
-              <DashboardCard04 />
-              <DashboardCard05 />
+              {/* <DashboardCard04 /> */}
+              <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+              <EngagementChart width={595} height={248} />
+              </div>
+              
+
+              <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+                <FollowerGrowthChart width={595} height={248} />
+              </div>
               {loading ? (
-                <div className="min-w-full flex justify-center"><BarLoader color="#1e293b" /></div>
+                <div className="min-w-full flex justify-center">
+                  <BarLoader color="#1e293b" />
+                </div>
               ) : (
                 <DashboardCard07 hashtags={hashtags} />
               )}
